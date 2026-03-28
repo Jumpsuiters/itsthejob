@@ -278,12 +278,13 @@ a { color: inherit; }
 }
 
 .question-headline {
-  font-size: 0.85rem !important;
+  display: block;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--white-muted) !important;
-  font-weight: 600 !important;
-  margin-bottom: 1.5rem !important;
+  color: var(--white-muted);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 .question-text {
