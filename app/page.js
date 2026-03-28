@@ -356,8 +356,7 @@ export default function Home() {
     setJobBoardText('Still hiring. Always hiring.');
     setTimeout(() => {
       setJobBoardText('Browse listings');
-      window.open('https://job-board-pied-three.vercel.app', '_blank', 'noopener,noreferrer');
-    }, 1500);
+    }, 2000);
   }
 
   function handleOwnClick(e) {
