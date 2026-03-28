@@ -691,6 +691,7 @@ export default function Home() {
                           .from('waitlist')
                           .insert({
                             email: magicReferralEmail,
+                            name: magicReferralName || null,
                             source: 'magic_show_referral',
                           })
                           .then(() => setMagicReferralSent(true));
