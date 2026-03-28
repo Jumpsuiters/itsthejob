@@ -655,7 +655,7 @@ export default function Home() {
           </div>
 
           <div className="door">
-            <div className="door-dept">Department of Holy Ground</div>
+            <div className="door-dept">Department of 4th Spaces</div>
             <h2 className="door-title">MagicShowLand</h2>
             <p className="door-desc">
               If Meow Wolf and a monastery had a baby and raised it in an abandoned
