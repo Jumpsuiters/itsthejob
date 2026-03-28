@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
 const APPLY_WORDS = ['Apply now', 'Show up', 'Begin', 'Enter'];
-const REDACTED_WORDS = ['SpiritTech', 'MagicShowLand', 'The Portal', 'Mycelium', '????????'];
+const REDACTED_WORDS = ['SpiritTech', 'The Portal', 'Mycelium', '????????'];
 
 // --- QUESTION ANSWERS (curated pool, 10 randomly selected per session) ---
 const QUESTION_POOL = [
@@ -651,6 +651,19 @@ export default function Home() {
               We can&apos;t explain these. You have to come.
             </p>
             <a href="#" onClick={handleMagicClick} className="door-link">{magicText}</a>
+          </div>
+
+          <div className="door">
+            <div className="door-dept">Department of Holy Ground</div>
+            <h2 className="door-title">MagicShowLand</h2>
+            <p className="door-desc">
+              Part Meow Wolf. Part retreat center. Part Hogwarts. Physical locations
+              in abandoned churches, castles, and defunct colleges — transformed into
+              IRL training grounds for the new humans. Transition centers where
+              displacement becomes reinvention, grief becomes fuel, and the work of
+              being human has a building with your name on the door.
+            </p>
+            <a href="#" onClick={(e) => { e.preventDefault(); }} className="door-link">Locations coming soon</a>
           </div>
 
           <div className="door">
