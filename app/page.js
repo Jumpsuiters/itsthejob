@@ -627,7 +627,7 @@ export default function Home() {
             <div className="door-dept">Department of Businessing Differently</div>
             <h2 className="door-title">Business 3.0</h2>
             <p className="door-desc">
-              The operating system for companies that want to be organisms, not machines.
+              A new model for companies that want to be organisms, not machines.
               AI runs ops. Humans do human work. Send your people through J.O.B. and get back
               something better than employees.
             </p>
