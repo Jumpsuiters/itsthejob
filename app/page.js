@@ -214,6 +214,7 @@ export default function Home() {
   const [questionClicks, setQuestionClicks] = useState(0);
   const questionAnswers = QUESTION_ANSWERS;
   const [heroRevealed, setHeroRevealed] = useState(false);
+  const [closeRevealed, setCloseRevealed] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [magicOpen, setMagicOpen] = useState(false);
@@ -264,42 +265,111 @@ export default function Home() {
   // --- SPARKLE CURSOR TRAIL ---
   useEffect(() => {
     const colors = ['#d4b84c', '#a8c744', '#3dcdb4', '#9b6dff', '#d466b0'];
-    let throttle = 0;
+    let cursorX = 0, cursorY = 0;
+    let prevX = null, prevY = null;
+    let isMoving = false;
+    let moveTimeout = null;
+    let animFrame = null;
 
-    function createSparkle(x, y) {
-      const el = document.createElement('div');
-      el.className = 'sparkle';
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const size = Math.random() * 6 + 3;
-      el.style.cssText = `
-        position: fixed;
-        left: ${x - size / 2}px;
-        top: ${y - size / 2}px;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${color};
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 1;
-        transition: all 0.6s ease-out;
+    // Inject keyframes once
+    if (!document.getElementById('sparkle-keyframes')) {
+      const style = document.createElement('style');
+      style.id = 'sparkle-keyframes';
+      style.textContent = `
+        @keyframes sparkleDrift {
+          0% { opacity: 0.9; transform: translate(0, 0) scale(1); }
+          50% { opacity: 0.5; }
+          100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.1); }
+        }
+        .sparkle-particle {
+          position: fixed;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 9999;
+          animation: sparkleDrift var(--duration) ease-out forwards;
+        }
       `;
+      document.head.appendChild(style);
+    }
+
+    function spawnSparkle(x, y) {
+      const el = document.createElement('div');
+      el.className = 'sparkle-particle';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 5 + 2;
+      const dx = (Math.random() - 0.5) * 40;
+      const dy = (Math.random() - 0.5) * 40 - 15;
+      const duration = Math.random() * 1 + 1.5;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.background = color;
+      el.style.boxShadow = `0 0 ${size + 2}px ${color}80`;
+      el.style.setProperty('--dx', dx + 'px');
+      el.style.setProperty('--dy', dy + 'px');
+      el.style.setProperty('--duration', duration + 's');
       document.body.appendChild(el);
-      requestAnimationFrame(() => {
-        el.style.opacity = '0';
-        el.style.transform = `translate(${(Math.random() - 0.5) * 30}px, ${(Math.random() - 0.5) * 30}px) scale(0)`;
-      });
-      setTimeout(() => el.remove(), 600);
+      setTimeout(() => el.remove(), duration * 1000);
+    }
+
+    // Continuous render loop — spawns sparkles every frame while moving
+    function sparkleLoop() {
+      if (!isMoving) return;
+      // Interpolate from previous to current
+      if (prevX !== null) {
+        const dx = cursorX - prevX;
+        const dy = cursorY - prevY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 2) {
+          const steps = Math.max(1, Math.floor(dist / 12));
+          for (let s = 0; s <= steps; s++) {
+            const t = s / steps;
+            const ix = prevX + dx * t;
+            const iy = prevY + dy * t;
+            spawnSparkle(ix + (Math.random() - 0.5) * 14, iy + (Math.random() - 0.5) * 14);
+          }
+        }
+      }
+      // Spawn at current position
+      spawnSparkle(cursorX + (Math.random() - 0.5) * 14, cursorY + (Math.random() - 0.5) * 14);
+      prevX = cursorX;
+      prevY = cursorY;
+      animFrame = requestAnimationFrame(sparkleLoop);
     }
 
     function handleMove(e) {
-      throttle++;
-      if (throttle % 3 !== 0) return;
-      createSparkle(e.clientX, e.clientY);
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      if (!isMoving) {
+        isMoving = true;
+        prevX = cursorX;
+        prevY = cursorY;
+        sparkleLoop();
+      }
+      // Reset the stop timer
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        isMoving = false;
+        cancelAnimationFrame(animFrame);
+        prevX = null;
+        prevY = null;
+      }, 100);
     }
 
-    window.addEventListener('mousemove', handleMove);
-    return () => window.removeEventListener('mousemove', handleMove);
+    function handleTouch(e) {
+      const touch = e.touches[0];
+      if (touch) {
+        handleMove({ clientX: touch.clientX, clientY: touch.clientY });
+      }
+    }
+
+    document.addEventListener('mousemove', handleMove, { passive: true });
+    document.addEventListener('touchmove', handleTouch, { passive: true });
+    return () => {
+      document.removeEventListener('mousemove', handleMove);
+      document.removeEventListener('touchmove', handleTouch);
+    };
   }, []);
 
   // Cycle the apply button text
@@ -802,13 +872,22 @@ export default function Home() {
       {/* ===== THE CLOSE ===== */}
       <section className="close-section">
         <div className="close-inner">
-          <p className="close-quote">
+          <p className="close-quote close-quote-bold">
             &ldquo;You never change things by fighting the existing reality. To change
             something, build a new model that makes the existing model obsolete.&rdquo;
           </p>
           <p className="close-attribution">&mdash; Buckminster Fuller</p>
-          <p className="close-line">J.O.B. stands for the Joy of Being.<br />Consider us a species-level upgrade.</p>
-          <a href="#" onClick={handleFindDoor} className="btn-enter">Pick your portal</a>
+          {!closeRevealed && (
+            <a href="#" onClick={(e) => { e.preventDefault(); setCloseRevealed(true); }} className="btn-enter">Build a new model</a>
+          )}
+          {closeRevealed && (
+            <div className="close-reveal">
+              <p className="close-vision">What if J.O.B. became the new human resources?</p>
+              <p className="close-vision">What if J.O.B. became the largest <s>employer</s> deployer on the planet?</p>
+              <p className="close-vision">What if we accidentally on purpose created the new human economy?</p>
+              <a href="#" onClick={handleFindDoor} className="btn-enter" style={{ marginTop: '2rem' }}>Pick your portal</a>
+            </div>
+          )}
         </div>
       </section>
 
