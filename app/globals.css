@@ -549,6 +549,22 @@ a { color: inherit; }
   border-color: var(--dark-text);
 }
 
+/* Door email forms (Invest, etc.) */
+.door-email-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  max-width: 360px;
+}
+.door-email-form .magic-input {
+  margin-bottom: 0;
+  flex: 1;
+}
+.door-email-form .magic-btn {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
 /* Magic Shows — Golden Ticket portal */
 .magic-portal {
   margin-top: 1rem;

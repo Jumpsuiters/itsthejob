@@ -263,6 +263,8 @@ export default function Home() {
   const [magicReferralEmail, setMagicReferralEmail] = useState('');
   const [magicReferralName, setMagicReferralName] = useState('');
   const [magicReferralSent, setMagicReferralSent] = useState(false);
+  const [investEmail, setInvestEmail] = useState('');
+  const [investSent, setInvestSent] = useState(false);
   const intervalRef = useRef(null);
   const doorsRef = useRef(null);
   const searchTimeoutRef = useRef(null);
@@ -543,14 +545,15 @@ export default function Home() {
       {/* ===== THE DOORS ===== */}
       <section className="openings" ref={doorsRef}>
         <div className="openings-inner">
-          <div className="openings-header">Current Openings</div>
+          <div className="openings-header">Choose Your Trojan Horse</div>
 
           <div className="door">
             <div className="door-dept">Department of Becoming</div>
             <h2 className="door-title">The Church</h2>
             <p className="door-desc">
-              For humans at a threshold. Sunday Night Live gatherings. Elder-guided tracks.
-              No dogma. No deity. Just the work of being alive on purpose.
+              Being is the new doing. Sunday Night Live gatherings. All questions, no answers.
+              Unorganized religion where there is no deity or dogma, just the rediscovery of
+              your personal sovereignty. Integrating the fragmentation of work and soul.
             </p>
             <a href="https://job-church.vercel.app" target="_blank" rel="noopener noreferrer" className="door-link">Learn more</a>
           </div>
@@ -560,8 +563,8 @@ export default function Home() {
             <h2 className="door-title">Business 3.0</h2>
             <p className="door-desc">
               A new model for companies that want to be organisms, not machines.
-              AI runs ops. Humans do human work. Send your people through J.O.B. and get back
-              something better than employees.
+              AI runs ops. Humans do human work.
+              The companies that survive the next decade won&apos;t look like companies at all.
             </p>
             <a href="#" onClick={handleB3Click} className="door-link">{b3Text}</a>
           </div>
@@ -570,9 +573,10 @@ export default function Home() {
             <div className="door-dept">Department of Getting Paid to Be Yourself</div>
             <h2 className="door-title">The J.O.B. Board</h2>
             <p className="door-desc">
-              A marketplace for things AI can&apos;t do. Post what you offer. Someone pays you
-              for it. Sit with someone while they cry. Sing something unrepeatable.
-              Be a hype person for ten minutes. That&apos;s it. That&apos;s the job.
+              A marketplace for things AI can&apos;t do. Post a very unique human offer.
+              Another human pays you for it. &ldquo;I&apos;ll hold your hand while you have
+              that hard conversation.&rdquo; &ldquo;I&apos;ll draw you while you talk about
+              your day.&rdquo; That&apos;s it. That&apos;s the job.
             </p>
             <a href="#" onClick={handleJobBoardClick} className="door-link">{jobBoardText}</a>
           </div>
@@ -652,8 +656,8 @@ export default function Home() {
             <div className="door-dept">Department of 4th Spaces</div>
             <h2 className="door-title">MagicShowLand</h2>
             <p className="door-desc">
-              If Meow Wolf and a monastery had a baby and raised it in an abandoned
-              castle. Physical spaces where humans go to remember what they are.
+              If Meow Wolf, Indeed, and AA had a baby.
+              Physical spaces where humans go to remember what they are.
               Immersive. Transformational. Weird on purpose. You&apos;ll leave different
               than you came in.
             </p>
@@ -664,10 +668,32 @@ export default function Home() {
             <div className="door-dept">Department of Putting Your Money Where Your Species Is</div>
             <h2 className="door-title">Invest</h2>
             <p className="door-desc">
-              This isn&apos;t a pitch. It&apos;s an invitation to fund the species-level upgrade.
-              We&apos;re building the new human economy — and we&apos;re raising the money to do it.
+              This is an invitation to fund a species-level upgrade.
+              We&apos;re the new human resources that will create the new human economy.
             </p>
-            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="door-link">See the deck</a>
+            {!investSent ? (
+              <form className="door-email-form" onSubmit={(e) => {
+                e.preventDefault();
+                if (investEmail) {
+                  supabase
+                    .from('waitlist')
+                    .insert({ email: investEmail, source: 'investor_deck_request' })
+                    .then(() => setInvestSent(true));
+                }
+              }}>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  value={investEmail}
+                  onChange={(e) => setInvestEmail(e.target.value)}
+                  className="magic-input"
+                  required
+                />
+                <button type="submit" className="magic-btn">Request the deck</button>
+              </form>
+            ) : (
+              <p className="magic-confirmed">Incoming. Watch your inbox.</p>
+            )}
           </div>
 
           <div className="door door-redacted">
@@ -684,7 +710,7 @@ export default function Home() {
       {/* ===== THE JOB LISTING ===== */}
       <section className="listing">
         <div className="listing-header">
-          <div className="listing-company">J.O.B. &mdash; The New Human Resources</div>
+          <div className="listing-company">J.O.B. Openings</div>
           <h1 className="listing-title">
             {visitCount >= 3 ? 'You keep coming back.' : visitCount === 2 ? 'Welcome back.' : 'Position: Human'}
           </h1>
@@ -703,7 +729,7 @@ export default function Home() {
         <div className="listing-body">
           <h3>About the role</h3>
           <p>
-            We&apos;re looking for someone who is alive and knows it. You&apos;ll be responsible
+            We&apos;re looking for someone who is alive. You&apos;ll be responsible
             for figuring out what you&apos;re here for and then doing that, possibly in front
             of other people, possibly for money.
           </p>
@@ -711,27 +737,25 @@ export default function Home() {
           <h3>Responsibilities</h3>
           <ul>
             <li>Showing up (harder than it sounds)</li>
-            <li>Not pretending to be a machine</li>
-            <li>Occasional crying, singing, or sitting in silence with strangers</li>
-            <li>Building something that didn&apos;t exist before you did</li>
-            <li>Unlearning most of what you were taught about work</li>
+            <li>Doing the inner work</li>
+            <li>And then, and only then, doing the external work</li>
+            <li>Unlearning most of what you were taught</li>
           </ul>
 
           <h3>Benefits</h3>
           <ul>
-            <li>Sunday gatherings where nobody sells you anything</li>
-            <li>A community of people who also don&apos;t know what they&apos;re doing yet</li>
-            <li>Access to elders (not managers)</li>
+            <li>Obliterating the separation of work and soul</li>
+            <li>A community of people who want to co-create a new reality</li>
             <li>A marketplace where you get paid to be yourself</li>
             <li>The chance to build a company that runs like an organism, not a factory</li>
-            <li>We don&apos;t have a ping pong table. But we have Magic Shows.</li>
+            <li>The chance to win a golden ticket to a Magic Show</li>
           </ul>
 
           <h3>Qualifications</h3>
           <ul>
             <li>Must be a human (AI need not apply)</li>
-            <li>Must be at a threshold &mdash; between who you were and who you&apos;re becoming</li>
-            <li>Experience in being alive preferred but not required</li>
+            <li>Must be at a threshold between who you were and who you&apos;re becoming</li>
+            <li>Experience in deconstruction (preferred, but also inevitable)</li>
           </ul>
 
           <span
@@ -740,8 +764,8 @@ export default function Home() {
             onMouseLeave={() => setAiHover(false)}
           >
             {aiHover
-              ? 'This role has been flagged by AI as "not a real job." ...okay fine, you can watch.'
-              : 'This role has been flagged by AI as "not a real job." We disagree.'
+              ? 'This role has been flagged by AI as "not a real job." Which, fair. We\'re inspiring, not hiring. Yet...'
+              : 'This role has been flagged by AI as "not a real job." Which, fair. We\'re inspiring, not hiring. Yet...'
             }
           </span>
         </div>
@@ -773,8 +797,8 @@ export default function Home() {
             disguised as a job board.
           </p>
           <p>
-            People keep asking <strong>&ldquo;but what IS it?&rdquo;</strong> and we keep
-            saying <em>yes</em>.
+            People keep asking <strong>&ldquo;but what IS it?&rdquo;</strong> and
+            we&apos;re like, <em>&ldquo;What&apos;s your J.O.B.?&rdquo;</em>
           </p>
           <p>
             Work trained you to be a worker. AI is doing the work now. So the
@@ -785,10 +809,6 @@ export default function Home() {
           <p>
             We didn&apos;t start a company to fix that. We grew
             an <strong>organism</strong> to outgrow it.
-          </p>
-          <p>
-            People who go through J.O.B. don&apos;t go back to employment.
-            They can&apos;t. They&apos;re not the same person anymore.
           </p>
         </div>
       </section>
