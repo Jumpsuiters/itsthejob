@@ -213,6 +213,7 @@ export default function Home() {
   const [searchLocked, setSearchLocked] = useState(false);
   const [questionClicks, setQuestionClicks] = useState(0);
   const questionAnswers = QUESTION_ANSWERS;
+  const [heroRevealed, setHeroRevealed] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [magicOpen, setMagicOpen] = useState(false);
@@ -395,51 +396,68 @@ export default function Home() {
       {/* ===== HERO ===== */}
       <section className="hero">
         <h1 className="hero-title">Being human<br /><span className="hero-gradient">is the job now.</span><br /><span className="hero-sub">The rest is being automated.</span></h1>
-        <p className="hero-narrative">
-          Work never taught us how to be human. It fragmented us. So did religion.
-          <br /><br />
-          <span className="hero-gradient">Our J.O.B. is the integration.</span>
+        <p
+          className="question-text"
+          onClick={() => {
+            if (!heroRevealed) setHeroRevealed(true);
+          }}
+          style={{ cursor: !heroRevealed ? 'pointer' : 'default' }}
+        >
+          Welcome to a species-level upgrade.
         </p>
-        <div className="hero-cta">
-          <p className="rco-explain">
-            We&apos;re calling in individuals and organizations committed to exploring
-            what it means to be fully human.
-          </p>
-          {!waitlistSubmitted ? (
-            <>
-              <p className="rco-ask">If that&apos;s you, tell us you were here:</p>
-              <form
-                className="waitlist-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (waitlistEmail) {
-                    supabase
-                      .from('waitlist')
-                      .insert({ email: waitlistEmail, source: 'rco_interest' })
-                      .then(({ error }) => {
-                        if (error && error.code === '23505') {
-                          // Duplicate email — still show success
-                        }
-                        setWaitlistSubmitted(true);
-                      });
-                  }
-                }}
-              >
-                <input
-                  type="email"
-                  placeholder="you@email.com"
-                  value={waitlistEmail}
-                  onChange={(e) => setWaitlistEmail(e.target.value)}
-                  className="waitlist-input"
-                  required
-                />
-                <button type="submit" className="waitlist-btn">was here</button>
-              </form>
-            </>
-          ) : (
-            <p className="waitlist-confirmed">We see you. We&apos;ll be in touch.</p>
-          )}
-        </div>
+        {!heroRevealed && (
+          <span className="question-hint">click.</span>
+        )}
+
+        {heroRevealed && (
+          <div className="hero-reveal">
+            <p className="hero-narrative">
+              Work never taught us how to be human. It fragmented us. So did religion.
+              <br /><br />
+              <span className="hero-gradient">Our J.O.B. is the integration.</span>
+            </p>
+            <div className="hero-cta">
+              <p className="rco-explain">
+                We&apos;re calling in individuals and organizations committed to exploring
+                what it means to be fully human.
+              </p>
+              {!waitlistSubmitted ? (
+                <>
+                  <p className="rco-ask">If that&apos;s you, tell us you were here:</p>
+                  <form
+                    className="waitlist-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (waitlistEmail) {
+                        supabase
+                          .from('waitlist')
+                          .insert({ email: waitlistEmail, source: 'rco_interest' })
+                          .then(({ error }) => {
+                            if (error && error.code === '23505') {
+                              // Duplicate email — still show success
+                            }
+                            setWaitlistSubmitted(true);
+                          });
+                      }
+                    }}
+                  >
+                    <input
+                      type="email"
+                      placeholder="you@email.com"
+                      value={waitlistEmail}
+                      onChange={(e) => setWaitlistEmail(e.target.value)}
+                      className="waitlist-input"
+                      required
+                    />
+                    <button type="submit" className="waitlist-btn">was here</button>
+                  </form>
+                </>
+              ) : (
+                <p className="waitlist-confirmed">We see you. We&apos;ll be in touch.</p>
+              )}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ===== THE PORTAL — The threshold ===== */}

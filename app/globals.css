@@ -145,6 +145,11 @@ a { color: inherit; }
   color: var(--white-text);
 }
 
+.hero-reveal {
+  animation: answerFadeIn 0.8s ease forwards;
+  opacity: 0;
+}
+
 .hero-narrative {
   max-width: 540px;
   margin: 2.5rem auto 0;
