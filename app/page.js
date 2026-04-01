@@ -509,7 +509,7 @@ export default function Home() {
       {/* ===== THE DOORS ===== */}
       <section className="openings" ref={doorsRef}>
         <div className="openings-inner">
-          <div className="openings-header">Choose Your Trojan Horse</div>
+          <div className="openings-header">J.O.B. stands for the Joy of Being.<br />Pick the portal to your new line of work.</div>
 
           <div className="door">
             <div className="door-dept">Department of Becoming</div>
