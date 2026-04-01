@@ -429,86 +429,10 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ===== THE JOB LISTING ===== */}
-      <section className="listing">
-        <div className="listing-header">
-          <div className="listing-company">J.O.B. &mdash; The New Human Resources</div>
-          <h1 className="listing-title">
-            {visitCount >= 3 ? 'You keep coming back.' : visitCount === 2 ? 'Welcome back.' : 'Position: Human'}
-          </h1>
-          {visitCount >= 3 ? (
-            <p className="listing-return">That means something. The position is still open. It always will be.</p>
-          ) : visitCount === 2 ? (
-            <p className="listing-return">The position is still open. It always will be.</p>
-          ) : null}
-          <div className="listing-meta">
-            <span>Location: Everywhere</span>
-            <span>Reports to: Yourself</span>
-            <span>Salary: TBD by you</span>
-          </div>
-        </div>
-
-        <div className="listing-body">
-          <h3>About the role</h3>
-          <p>
-            We&apos;re looking for someone who is alive and knows it. You&apos;ll be responsible
-            for figuring out what you&apos;re here for and then doing that, possibly in front
-            of other people, possibly for money.
-          </p>
-
-          <h3>Responsibilities</h3>
-          <ul>
-            <li>Showing up (harder than it sounds)</li>
-            <li>Not pretending to be a machine</li>
-            <li>Occasional crying, singing, or sitting in silence with strangers</li>
-            <li>Building something that didn&apos;t exist before you did</li>
-            <li>Unlearning most of what you were taught about work</li>
-          </ul>
-
-          <h3>Benefits</h3>
-          <ul>
-            <li>Sunday gatherings where nobody sells you anything</li>
-            <li>A community of people who also don&apos;t know what they&apos;re doing yet</li>
-            <li>Access to elders (not managers)</li>
-            <li>A marketplace where you get paid to be yourself</li>
-            <li>The chance to build a company that runs like an organism, not a factory</li>
-            <li>We don&apos;t have a ping pong table. But we have Magic Shows.</li>
-          </ul>
-
-          <h3>Qualifications</h3>
-          <ul>
-            <li>Must be a human (AI need not apply)</li>
-            <li>Must be at a threshold &mdash; between who you were and who you&apos;re becoming</li>
-            <li>Experience in being alive preferred but not required</li>
-          </ul>
-
-          <span
-            className="ai-flag"
-            onMouseEnter={() => setAiHover(true)}
-            onMouseLeave={() => setAiHover(false)}
-          >
-            {aiHover
-              ? 'This role has been flagged by AI as "not a real job." ...okay fine, you can watch.'
-              : 'This role has been flagged by AI as "not a real job." We disagree.'
-            }
-          </span>
-        </div>
-
-        <div className="listing-cta">
-          {!applied ? (
-            <button className="btn-apply" onClick={handleApply}>
-              {applyText}
-            </button>
-          ) : null}
-          <div className={`hired-msg ${applied ? 'visible' : ''}`}>
-            You&apos;re hired. You always were.
-          </div>
-        </div>
+      {/* ===== HERO ===== */}
+      <section className="hero">
+        <h1 className="hero-title">The machines took your job.<br />Now the real work begins.</h1>
       </section>
-
-      {/* This is the part where the job listing ends and something else begins.
-           If you're still reading source code, you're going deeper than most.
-           The organism appreciates your curiosity. */}
 
       {/* ===== THE QUESTION ===== */}
       <section className="question">
@@ -751,6 +675,83 @@ export default function Home() {
               The organism is growing. More doors are appearing.
             </p>
             <a href="#" onClick={handleRedactedClick} className="door-link">{redactedLinkText}</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== THE JOB LISTING ===== */}
+      <section className="listing">
+        <div className="listing-header">
+          <div className="listing-company">J.O.B. &mdash; The New Human Resources</div>
+          <h1 className="listing-title">
+            {visitCount >= 3 ? 'You keep coming back.' : visitCount === 2 ? 'Welcome back.' : 'Position: Human'}
+          </h1>
+          {visitCount >= 3 ? (
+            <p className="listing-return">That means something. The position is still open. It always will be.</p>
+          ) : visitCount === 2 ? (
+            <p className="listing-return">The position is still open. It always will be.</p>
+          ) : null}
+          <div className="listing-meta">
+            <span>Location: Everywhere</span>
+            <span>Reports to: Yourself</span>
+            <span>Salary: TBD by you</span>
+          </div>
+        </div>
+
+        <div className="listing-body">
+          <h3>About the role</h3>
+          <p>
+            We&apos;re looking for someone who is alive and knows it. You&apos;ll be responsible
+            for figuring out what you&apos;re here for and then doing that, possibly in front
+            of other people, possibly for money.
+          </p>
+
+          <h3>Responsibilities</h3>
+          <ul>
+            <li>Showing up (harder than it sounds)</li>
+            <li>Not pretending to be a machine</li>
+            <li>Occasional crying, singing, or sitting in silence with strangers</li>
+            <li>Building something that didn&apos;t exist before you did</li>
+            <li>Unlearning most of what you were taught about work</li>
+          </ul>
+
+          <h3>Benefits</h3>
+          <ul>
+            <li>Sunday gatherings where nobody sells you anything</li>
+            <li>A community of people who also don&apos;t know what they&apos;re doing yet</li>
+            <li>Access to elders (not managers)</li>
+            <li>A marketplace where you get paid to be yourself</li>
+            <li>The chance to build a company that runs like an organism, not a factory</li>
+            <li>We don&apos;t have a ping pong table. But we have Magic Shows.</li>
+          </ul>
+
+          <h3>Qualifications</h3>
+          <ul>
+            <li>Must be a human (AI need not apply)</li>
+            <li>Must be at a threshold &mdash; between who you were and who you&apos;re becoming</li>
+            <li>Experience in being alive preferred but not required</li>
+          </ul>
+
+          <span
+            className="ai-flag"
+            onMouseEnter={() => setAiHover(true)}
+            onMouseLeave={() => setAiHover(false)}
+          >
+            {aiHover
+              ? 'This role has been flagged by AI as "not a real job." ...okay fine, you can watch.'
+              : 'This role has been flagged by AI as "not a real job." We disagree.'
+            }
+          </span>
+        </div>
+
+        <div className="listing-cta">
+          {!applied ? (
+            <button className="btn-apply" onClick={handleApply}>
+              {applyText}
+            </button>
+          ) : null}
+          <div className={`hired-msg ${applied ? 'visible' : ''}`}>
+            You&apos;re hired. You always were.
           </div>
         </div>
       </section>
