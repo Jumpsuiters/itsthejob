@@ -485,8 +485,13 @@ export default function Home() {
               The ROI? Humans who are actually alive at work. Teams that don&apos;t burn out.
               Organizations that mean it when they say &ldquo;people first.&rdquo;
             </p>
+            <p className="rco-explain">
+              We&apos;re calling in individuals and organizations who feel called to deeply
+              explore this question. If that&apos;s you, there are a handful of ways to get
+              going with us. Pick your Trojan Horse below.
+            </p>
             <p className="rco-ask">
-              Is your organization ready to explore this?
+              But first, tell us you were here.
             </p>
             <form
               className="waitlist-form"
@@ -513,11 +518,8 @@ export default function Home() {
                 className="waitlist-input"
                 required
               />
-              <button type="submit" className="waitlist-btn">We&apos;re interested</button>
+              <button type="submit" className="waitlist-btn">was here</button>
             </form>
-            <p className="question-cta-sub">
-              For founders, HR leads, culture teams, and anyone who knows something has to change.
-            </p>
           </div>
         )}
 
