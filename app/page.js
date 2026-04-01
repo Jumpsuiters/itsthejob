@@ -261,6 +261,47 @@ export default function Home() {
     return () => clearInterval(cycle);
   }, []);
 
+  // --- SPARKLE CURSOR TRAIL ---
+  useEffect(() => {
+    const colors = ['#d4b84c', '#a8c744', '#3dcdb4', '#9b6dff', '#d466b0'];
+    let throttle = 0;
+
+    function createSparkle(x, y) {
+      const el = document.createElement('div');
+      el.className = 'sparkle';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 6 + 3;
+      el.style.cssText = `
+        position: fixed;
+        left: ${x - size / 2}px;
+        top: ${y - size / 2}px;
+        width: ${size}px;
+        height: ${size}px;
+        background: ${color};
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 1;
+        transition: all 0.6s ease-out;
+      `;
+      document.body.appendChild(el);
+      requestAnimationFrame(() => {
+        el.style.opacity = '0';
+        el.style.transform = `translate(${(Math.random() - 0.5) * 30}px, ${(Math.random() - 0.5) * 30}px) scale(0)`;
+      });
+      setTimeout(() => el.remove(), 600);
+    }
+
+    function handleMove(e) {
+      throttle++;
+      if (throttle % 3 !== 0) return;
+      createSparkle(e.clientX, e.clientY);
+    }
+
+    window.addEventListener('mousemove', handleMove);
+    return () => window.removeEventListener('mousemove', handleMove);
+  }, []);
+
   // Cycle the apply button text
   useEffect(() => {
     if (applied) return;
