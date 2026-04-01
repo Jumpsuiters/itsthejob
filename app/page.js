@@ -433,7 +433,7 @@ export default function Home() {
 
       {/* ===== HERO ===== */}
       <section className="hero">
-        <h1 className="hero-title">The machines took your job.<br />Now the real work begins.</h1>
+        <h1 className="hero-title">The machines took your job.<br /><span className="hero-gradient">Now the real work begins.</span></h1>
       </section>
 
       {/* ===== THE QUESTION ===== */}

@@ -145,6 +145,13 @@ a { color: inherit; }
   color: var(--white-text);
 }
 
+.hero-gradient {
+  background: linear-gradient(135deg, var(--glow-gold), var(--glow-chartreuse), var(--glow-teal), var(--glow-purple), var(--glow-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ============================================
    ACT 1: THE JOB LISTING — Now lives after the doors
    ============================================ */
