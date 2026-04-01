@@ -664,6 +664,7 @@ export default function Home() {
 
       {/* ===== THE JOB LISTING ===== */}
       <section className="listing">
+        <div className="listing-inner">
         <div className="listing-header">
           <div className="listing-company">J.O.B. Openings</div>
           <h1 className="listing-title">
@@ -734,6 +735,7 @@ export default function Home() {
           <div className={`hired-msg ${applied ? 'visible' : ''}`}>
             You&apos;re hired. You always were.
           </div>
+        </div>
         </div>
       </section>
 

@@ -157,11 +157,14 @@ a { color: inherit; }
    ============================================ */
 
 .listing {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 4rem 1.5rem 3rem;
   background: var(--dark-bg);
   color: var(--dark-text);
+  padding: 4rem 1.5rem 3rem;
+}
+
+.listing-inner {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .listing-header {
