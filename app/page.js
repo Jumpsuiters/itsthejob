@@ -225,6 +225,7 @@ export default function Home() {
   const [jobBoardHover, setJobBoardHover] = useState(false);
   const intervalRef = useRef(null);
   const doorsRef = useRef(null);
+  const investRef = useRef(null);
   const searchTimeoutRef = useRef(null);
 
   // --- RETURN VISITOR MEMORY (#10) ---
@@ -379,9 +380,8 @@ export default function Home() {
             />
           </div>
           <a
-            href="https://job-deck-indol.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#invest"
+            onClick={(e) => { e.preventDefault(); investRef.current?.scrollIntoView({ behavior: 'smooth' }); }}
             className="nav-investors"
           >
             Investors
@@ -468,11 +468,6 @@ export default function Home() {
         {waitlistSubmitted && (
           <div className="question-cta">
             <p className="waitlist-confirmed">We see you. We&apos;ll be in touch.</p>
-            <p className="question-cta-sub">
-              <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="rco-link">
-                Read the full vision while you wait &rarr;
-              </a>
-            </p>
           </div>
         )}
       </section>
@@ -624,7 +619,7 @@ export default function Home() {
             >{mslHover ? 'We\u2019re scouting castles. Literally.' : 'Locations coming soon'}</a>
           </div>
 
-          <div className="door">
+          <div className="door" ref={investRef}>
             <div className="door-dept">Department of Putting Your Money Where Your Species Is</div>
             <h2 className="door-title">Invest</h2>
             <p className="door-desc">
@@ -800,7 +795,7 @@ export default function Home() {
             <a href="#" onClick={handleB3Click}>{b3Text === 'Evolve your company' ? 'Business 3.0' : b3Text}</a>
             <a href="#" onClick={handleMagicClick}>{magicText === 'Get invited' ? 'Magic Shows' : magicText}</a>
             <a href="#" onClick={handleOwnClick}>{ownText}</a>
-            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer">Investors</a>
+            <a href="#invest" onClick={(e) => { e.preventDefault(); investRef.current?.scrollIntoView({ behavior: 'smooth' }); }}>Investors</a>
           </div>
           <p className="footer-fine-print">
             This page was not written by AI. We asked. It said this was too weird.
