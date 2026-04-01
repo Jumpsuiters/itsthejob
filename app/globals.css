@@ -145,6 +145,13 @@ a { color: inherit; }
   color: var(--white-text);
 }
 
+.hero-badge {
+  display: block;
+  max-width: 560px;
+  margin: 2rem auto;
+  filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.3));
+}
+
 .hero-reveal {
   animation: answerFadeIn 0.8s ease forwards;
   opacity: 0;
@@ -627,6 +634,35 @@ a { color: inherit; }
   white-space: nowrap;
 }
 
+/* Invest form (multi-field) */
+.invest-form {
+  margin-top: 1rem;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.invest-form-field label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dark-muted);
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+.invest-form .magic-input {
+  margin-bottom: 0;
+}
+.invest-form select.magic-input {
+  appearance: none;
+  cursor: pointer;
+}
+.invest-form .magic-btn {
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
 /* Magic Shows — Golden Ticket portal */
 .magic-portal {
   margin-top: 1rem;
@@ -713,6 +749,19 @@ a { color: inherit; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Orientation image */
+.orientation-img {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+}
+.orientation-img img {
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* Footer link easter egg transitions */
@@ -1024,6 +1073,7 @@ a { color: inherit; }
   /* Hero */
   .hero { padding: 4rem 1.25rem; }
   .hero-title { font-size: 1.8rem; }
+  .hero-badge { max-width: 360px; }
 
   /* Listing */
   .listing { padding: 2.5rem 1.25rem 2rem; }

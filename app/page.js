@@ -223,8 +223,8 @@ export default function Home() {
   const [magicReferralEmail, setMagicReferralEmail] = useState('');
   const [magicReferralName, setMagicReferralName] = useState('');
   const [magicReferralSent, setMagicReferralSent] = useState(false);
-  const [investEmail, setInvestEmail] = useState('');
-  const [investSent, setInvestSent] = useState(false);
+  const [investForm, setInvestForm] = useState({ name: '', email: '', phone: '', investment_level: '' });
+  const [investStatus, setInvestStatus] = useState('idle');
   const [magicReferralWhy, setMagicReferralWhy] = useState('');
   const [mslHover, setMslHover] = useState(false);
   const [jobBoardHover, setJobBoardHover] = useState(false);
@@ -501,12 +501,14 @@ export default function Home() {
           >
             Investors
           </a>
+          <a href="/pay" className="nav-investors">But who&apos;s gonna pay for it?</a>
         </div>
       </nav>
 
       {/* ===== HERO ===== */}
       <section className="hero">
         <h1 className="hero-title">Being human<br /><span className="hero-gradient">is the job now.</span><br /><span className="hero-sub">The rest is being automated.</span></h1>
+        <img src="/badge.png" alt="J.O.B. Employee Badge" className="hero-badge" />
         <p
           className="question-text"
           onClick={() => {
@@ -514,7 +516,7 @@ export default function Home() {
           }}
           style={{ cursor: !heroRevealed ? 'pointer' : 'default' }}
         >
-          Welcome to a species-level upgrade.
+          Welcome to the &ldquo;new human&rdquo; resource.
         </p>
         {!heroRevealed && (
           <span className="question-hint">click.</span>
@@ -579,7 +581,7 @@ export default function Home() {
       {/* ===== THE DOORS ===== */}
       <section className="openings" ref={doorsRef}>
         <div className="openings-inner">
-          <div className="openings-header">J.O.B. stands for the Joy of Being.<br />Pick the portal to your new line of work.</div>
+          <div className="openings-header">J.O.B. stands for the Joy of Being.<br />Pick the portal you want to play in.</div>
 
           <div className="door">
             <div className="door-dept">Department of Becoming</div>
@@ -724,29 +726,50 @@ export default function Home() {
             <p className="door-desc">
               This is an invitation to fund a species-level upgrade.
               We&apos;re the new human resources that will create the new human economy.
+              Expressing interest doesn&apos;t commit you to anything — it just starts the conversation.
             </p>
-            {!investSent ? (
-              <form className="door-email-form" onSubmit={(e) => {
-                e.preventDefault();
-                if (investEmail) {
-                  supabase
-                    .from('waitlist')
-                    .insert({ email: investEmail, source: 'investor_deck_request' })
-                    .then(() => setInvestSent(true));
-                }
-              }}>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  value={investEmail}
-                  onChange={(e) => setInvestEmail(e.target.value)}
-                  className="magic-input"
-                  required
-                />
-                <button type="submit" className="magic-btn">Request the deck</button>
-              </form>
+            {investStatus === 'success' ? (
+              <p className="magic-confirmed">You&apos;re in. We&apos;ll be in touch when the organism is ready for you.</p>
             ) : (
-              <p className="magic-confirmed">Incoming. Watch your inbox.</p>
+              <form className="invest-form" onSubmit={async (e) => {
+                e.preventDefault();
+                setInvestStatus('submitting');
+                const { error } = await supabase.from('deck_waitlist').insert([{
+                  name: investForm.name,
+                  email: investForm.email,
+                  phone: investForm.phone || null,
+                  investment_level: investForm.investment_level || null,
+                }]);
+                setInvestStatus(error ? 'error' : 'success');
+              }}>
+                <div className="invest-form-field">
+                  <label>Name *</label>
+                  <input type="text" required value={investForm.name} onChange={e => setInvestForm(f => ({ ...f, name: e.target.value }))} className="magic-input" placeholder="Your name" />
+                </div>
+                <div className="invest-form-field">
+                  <label>Email *</label>
+                  <input type="email" required value={investForm.email} onChange={e => setInvestForm(f => ({ ...f, email: e.target.value }))} className="magic-input" placeholder="Your email" />
+                </div>
+                <div className="invest-form-field">
+                  <label>Phone</label>
+                  <input type="tel" value={investForm.phone} onChange={e => setInvestForm(f => ({ ...f, phone: e.target.value }))} className="magic-input" placeholder="Your phone (optional)" />
+                </div>
+                <div className="invest-form-field">
+                  <label>Investment Interest</label>
+                  <select value={investForm.investment_level} onChange={e => setInvestForm(f => ({ ...f, investment_level: e.target.value }))} className="magic-input">
+                    <option value="">Select a range</option>
+                    <option value="$1K-$10K">$1K – $10K</option>
+                    <option value="$10K-$50K">$10K – $50K</option>
+                    <option value="$50K-$100K">$50K – $100K</option>
+                    <option value="$100K-$500K">$100K – $500K</option>
+                    <option value="$500K+">$500K+</option>
+                    <option value="Just watching">Just watching for now</option>
+                  </select>
+                </div>
+                <button type="submit" className="magic-btn" disabled={investStatus === 'submitting'}>
+                  {investStatus === 'submitting' ? 'Joining...' : investStatus === 'error' ? 'Try again' : 'Join the Organism'}
+                </button>
+              </form>
             )}
           </div>
 
@@ -904,7 +927,6 @@ export default function Home() {
             <a href="#" onClick={handleJobBoardClick}>{jobBoardText === 'Browse listings' ? 'The J.O.B. Board' : jobBoardText}</a>
             <a href="#" onClick={handleB3Click}>{b3Text === 'Evolve your company' ? 'Business 3.0' : b3Text}</a>
             <a href="#" onClick={handleMagicClick}>{magicText === 'Get invited' ? 'Magic Shows' : magicText}</a>
-            <a href="#" onClick={handleOwnClick}>{ownText}</a>
             <a href="#invest" onClick={(e) => { e.preventDefault(); investRef.current?.scrollIntoView({ behavior: 'smooth' }); }}>Investors</a>
           </div>
           <p className="footer-fine-print">
