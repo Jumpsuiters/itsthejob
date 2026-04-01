@@ -391,7 +391,7 @@ export default function Home() {
 
       {/* ===== HERO + QUESTION ===== */}
       <section className="hero">
-        <h1 className="hero-title">For thousands of years, we trained humans to be workers but never fully human.<br /><span className="hero-gradient">It&apos;s time for a new human resource.</span></h1>
+        <h1 className="hero-title">Being human<br /><span className="hero-gradient">is the job now.</span><br /><span className="hero-sub">The rest is being automated.</span></h1>
         <p
           className="question-text"
           onClick={() => {
