@@ -446,7 +446,7 @@ export default function Home() {
           }}
           style={{ cursor: questionClicks < questionAnswers.length ? 'pointer' : 'default' }}
         >
-          What becomes possible when being human is the job?
+          What happens when being human <em>is</em> the job?
         </p>
         {questionClicks < questionAnswers.length && (
           <span className="question-hint">
