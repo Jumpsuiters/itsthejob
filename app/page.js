@@ -592,6 +592,8 @@ export default function Home() {
               your personal sovereignty. Integrating the fragmentation of work and soul.
             </p>
             <a href="https://apply.itsthejob.com" target="_blank" rel="noopener noreferrer" className="door-link">Become a member</a>
+            <br />
+            <a href="https://www.crowdcast.io/c/i2lm9f5y5vg1" target="_blank" rel="noopener noreferrer" className="door-link" style={{ marginTop: '0.75rem', display: 'inline-block' }}>Join Sunday Night Live</a>
           </div>
 
           <div className="door">

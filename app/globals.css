@@ -618,6 +618,10 @@ a { color: inherit; }
   border-color: var(--dark-text);
 }
 
+.door-link-secondary {
+  margin-left: 0;
+}
+
 /* Door email forms (Invest, etc.) */
 .door-email-form {
   display: flex;
@@ -1114,4 +1118,170 @@ a { color: inherit; }
   .footer { padding: 2rem 1.25rem; }
   .footer-links { gap: 1rem; }
   .footer-links a { font-size: 0.8rem; }
+  .ij-admin-table-wrap { overflow-x: auto; }
+  .ij-admin-table { font-size: 0.75rem; }
+  .ij-admin-tabs { gap: 0.25rem; }
+}
+
+/* ===== ADMIN PAGE ===== */
+.ij-admin-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+.ij-admin-password {
+  text-align: center;
+  padding: 6rem 0;
+}
+.ij-admin-password h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--glow-gold);
+  margin-bottom: 1.5rem;
+}
+.ij-admin-password form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.ij-admin-password input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 8px;
+  color: var(--dark-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+}
+.ij-admin-password input:focus { border-color: var(--glow-gold); }
+.ij-admin-password button {
+  padding: 0.6rem 1.25rem;
+  background: var(--glow-gold);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+.ij-admin-error {
+  color: var(--glow-pink, #ec4899);
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}
+
+.ij-admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.ij-admin-header h1 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--glow-gold);
+  margin-bottom: 0.25rem;
+}
+.ij-admin-back {
+  font-size: 0.8rem;
+  color: var(--dark-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ij-admin-back:hover { color: var(--dark-text); }
+.ij-admin-counts {
+  display: flex;
+  gap: 1rem;
+}
+.ij-admin-count {
+  font-size: 0.8rem;
+  color: var(--dark-muted);
+  padding: 0.3rem 0.75rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 20px;
+}
+
+.ij-admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.ij-admin-tab {
+  padding: 0.5rem 1.25rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 8px;
+  color: var(--dark-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ij-admin-tab:hover { border-color: var(--glow-gold); color: var(--dark-text); }
+.ij-admin-tab.active {
+  background: var(--glow-gold);
+  border-color: var(--glow-gold);
+  color: #000;
+}
+
+.ij-admin-table-wrap {
+  overflow-x: auto;
+}
+.ij-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.ij-admin-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dark-muted);
+  border-bottom: 1px solid var(--dark-border);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ij-admin-table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--dark-border);
+  color: var(--dark-text);
+}
+.ij-admin-table tr:hover td {
+  background: var(--dark-surface);
+}
+.ij-admin-table a {
+  color: var(--glow-teal);
+  text-decoration: none;
+}
+.ij-admin-table a:hover { text-decoration: underline; }
+.ij-admin-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--dark-muted);
+}
+.ij-admin-date {
+  color: var(--dark-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+.ij-admin-empty {
+  text-align: center;
+  color: var(--dark-muted);
+  font-size: 0.9rem;
+  padding: 3rem 0;
 }
