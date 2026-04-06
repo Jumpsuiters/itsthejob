@@ -218,11 +218,6 @@ export default function Home() {
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [investForm, setInvestForm] = useState({ name: '', email: '', phone: '', investment_level: '' });
   const [investStatus, setInvestStatus] = useState('idle');
-  const [nhrForm, setNhrForm] = useState({
-    name: '', title: '', company: '', email: '', phone: '',
-    headcount: '', timeline: '', notes: '', wants_show: '',
-  });
-  const [nhrStatus, setNhrStatus] = useState('idle');
   const [mslHover, setMslHover] = useState(false);
   const [jobBoardHover, setJobBoardHover] = useState(false);
   const intervalRef = useRef(null);
@@ -654,84 +649,7 @@ export default function Home() {
             <p className="door-desc">
               If you&apos;re going to let people go, at least tell the truth: the system doesn&apos;t work anymore. Then offer something real—not a softer landing, but a path out of the system entirely.
             </p>
-            {nhrStatus === 'success' ? (
-              <p className="magic-confirmed">Application received. We&apos;ll be in touch.</p>
-            ) : (
-              <form className="invest-form" onSubmit={async (e) => {
-                e.preventDefault();
-                setNhrStatus('submitting');
-                const { error } = await supabase.from('nhr_applications').insert([{
-                  name: nhrForm.name,
-                  title: nhrForm.title,
-                  company: nhrForm.company,
-                  email: nhrForm.email,
-                  phone: nhrForm.phone,
-                  headcount: nhrForm.headcount || null,
-                  timeline: nhrForm.timeline || null,
-                  notes: nhrForm.notes || null,
-                  wants_show: nhrForm.wants_show || null,
-                }]);
-                setNhrStatus(error ? 'error' : 'success');
-              }}>
-                <div className="invest-form-field">
-                  <label>Name *</label>
-                  <input type="text" required value={nhrForm.name} onChange={e => setNhrForm(f => ({ ...f, name: e.target.value }))} className="magic-input" placeholder="Your name" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Title *</label>
-                  <input type="text" required value={nhrForm.title} onChange={e => setNhrForm(f => ({ ...f, title: e.target.value }))} className="magic-input" placeholder="e.g. CEO, CHRO, Head of People" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Company *</label>
-                  <input type="text" required value={nhrForm.company} onChange={e => setNhrForm(f => ({ ...f, company: e.target.value }))} className="magic-input" placeholder="Your company" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Work Email *</label>
-                  <input type="email" required value={nhrForm.email} onChange={e => setNhrForm(f => ({ ...f, email: e.target.value }))} className="magic-input" placeholder="you@company.com" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Phone *</label>
-                  <input type="tel" required value={nhrForm.phone} onChange={e => setNhrForm(f => ({ ...f, phone: e.target.value }))} className="magic-input" placeholder="(555) 555-5555" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Approximate # of people you&apos;re offboarding</label>
-                  <select value={nhrForm.headcount} onChange={e => setNhrForm(f => ({ ...f, headcount: e.target.value }))} className="magic-input">
-                    <option value="">Select a range</option>
-                    <option value="1-10">1 – 10</option>
-                    <option value="11-50">11 – 50</option>
-                    <option value="51-200">51 – 200</option>
-                    <option value="200+">200+</option>
-                    <option value="planning">Not yet — planning ahead</option>
-                  </select>
-                </div>
-                <div className="invest-form-field">
-                  <label>Timeline</label>
-                  <select value={nhrForm.timeline} onChange={e => setNhrForm(f => ({ ...f, timeline: e.target.value }))} className="magic-input">
-                    <option value="">When do you need this?</option>
-                    <option value="now">Now / actively offboarding</option>
-                    <option value="30">Next 30 days</option>
-                    <option value="quarter">Next quarter</option>
-                    <option value="planning">Just planning ahead</option>
-                  </select>
-                </div>
-                <div className="invest-form-field">
-                  <label>Anything you want us to know</label>
-                  <textarea value={nhrForm.notes} onChange={e => setNhrForm(f => ({ ...f, notes: e.target.value }))} className="magic-input magic-textarea" rows={3} placeholder="Context, why now, what hurts..." />
-                </div>
-                <div className="invest-form-field">
-                  <label>Want to attend a Founder&apos;s Magic Show first?</label>
-                  <select value={nhrForm.wants_show} onChange={e => setNhrForm(f => ({ ...f, wants_show: e.target.value }))} className="magic-input">
-                    <option value="">Select one</option>
-                    <option value="yes">Yes — I want to experience it myself</option>
-                    <option value="tell_me">Tell me more</option>
-                    <option value="no">No — straight to the program</option>
-                  </select>
-                </div>
-                <button type="submit" className="magic-btn" disabled={nhrStatus === 'submitting'}>
-                  {nhrStatus === 'submitting' ? 'Sending...' : nhrStatus === 'error' ? 'Try again' : 'Apply to bring this to your team'}
-                </button>
-              </form>
-            )}
+            <a href="https://new-human-resources.vercel.app" target="_blank" rel="noopener noreferrer" className="door-link">Apply to bring this to your team &rarr;</a>
           </div>
 
           <div className="door" ref={investRef}>
