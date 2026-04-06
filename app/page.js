@@ -203,7 +203,6 @@ export default function Home() {
   const [applyText, setApplyText] = useState(APPLY_WORDS[0]);
   const [redactedWord, setRedactedWord] = useState('[REDACTED]');
   const [aiHover, setAiHover] = useState(false);
-  const [magicText, setMagicText] = useState('Get invited');
   const [b3Text, setB3Text] = useState('Evolve your company');
   const [redactedLinkText, setRedactedLinkText] = useState('Stay close');
   const [jobBoardText, setJobBoardText] = useState('Browse listings');
@@ -217,15 +216,8 @@ export default function Home() {
   const [closeRevealed, setCloseRevealed] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
-  const [magicOpen, setMagicOpen] = useState(false);
-  const [magicCode, setMagicCode] = useState('');
-  const [magicCodeMsg, setMagicCodeMsg] = useState('');
-  const [magicReferralEmail, setMagicReferralEmail] = useState('');
-  const [magicReferralName, setMagicReferralName] = useState('');
-  const [magicReferralSent, setMagicReferralSent] = useState(false);
   const [investForm, setInvestForm] = useState({ name: '', email: '', phone: '', investment_level: '' });
   const [investStatus, setInvestStatus] = useState('idle');
-  const [magicReferralWhy, setMagicReferralWhy] = useState('');
   const [mslHover, setMslHover] = useState(false);
   const [jobBoardHover, setJobBoardHover] = useState(false);
   const intervalRef = useRef(null);
@@ -410,13 +402,6 @@ export default function Home() {
       setSearchResponse('');
       setSearchLocked(false);
     }, 2500);
-  }
-
-  function handleMagicClick(e) {
-    e.preventDefault();
-    setMagicText('You weren\u2019t supposed to click that.');
-    setTimeout(() => setMagicText('Seriously, you have to come.'), 2000);
-    setTimeout(() => setMagicText('Get invited'), 4500);
   }
 
   function handleB3Click(e) {
@@ -631,77 +616,7 @@ export default function Home() {
             <p className="door-desc">
               We can&apos;t explain these. You have to come.
             </p>
-            {!magicOpen ? (
-              <a href="#" onClick={(e) => { e.preventDefault(); setMagicOpen(true); }} className="door-link">Got a golden ticket?</a>
-            ) : (
-              <div className="magic-portal">
-                <div className="magic-code-section">
-                  <input
-                    type="text"
-                    placeholder="Enter Golden Ticket code"
-                    value={magicCode}
-                    onChange={(e) => setMagicCode(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && magicCode) {
-                        // TODO: validate against real codes
-                        setMagicCodeMsg('That\u2019s not it. But we like that you tried.');
-                        setTimeout(() => setMagicCodeMsg(''), 3000);
-                      }
-                    }}
-                    className="magic-input"
-                  />
-                  {magicCodeMsg && <span className="magic-code-msg">{magicCodeMsg}</span>}
-                </div>
-                <div className="magic-divider">
-                  <span>or</span>
-                </div>
-                {!magicReferralSent ? (
-                  <div className="magic-referral">
-                    <p className="magic-referral-label">Someone told you. They weren&apos;t supposed to.</p>
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
-                      if (magicReferralEmail) {
-                        supabase
-                          .from('waitlist')
-                          .insert({
-                            email: magicReferralEmail,
-                            name: magicReferralName || null,
-                            note: magicReferralWhy || null,
-                            source: 'magic_show_referral',
-                          })
-                          .then(() => setMagicReferralSent(true));
-                      }
-                    }}>
-                      <input
-                        type="text"
-                        placeholder="Your name"
-                        value={magicReferralName}
-                        onChange={(e) => setMagicReferralName(e.target.value)}
-                        className="magic-input"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Your email"
-                        value={magicReferralEmail}
-                        onChange={(e) => setMagicReferralEmail(e.target.value)}
-                        className="magic-input"
-                        required
-                      />
-                      <textarea
-                        placeholder="Why should we invite you to a show?"
-                        value={magicReferralWhy}
-                        onChange={(e) => setMagicReferralWhy(e.target.value)}
-                        className="magic-input magic-textarea"
-                        rows={3}
-                      />
-                      <button type="submit" className="magic-btn">Put me on the list anyway</button>
-                    </form>
-                  </div>
-                ) : (
-                  <p className="magic-confirmed">You&apos;ll know when you know.</p>
-                )}
-              </div>
-            )}
+            <a href="https://magic-show-pi.vercel.app" target="_blank" rel="noopener noreferrer" className="door-link">Enter the Magic Show &rarr;</a>
           </div>
 
           <div className="door">
@@ -928,7 +843,7 @@ export default function Home() {
             <a href="https://apply.itsthejob.com" target="_blank" rel="noopener noreferrer">The Church</a>
             <a href="#" onClick={handleJobBoardClick}>{jobBoardText === 'Browse listings' ? 'The J.O.B. Board' : jobBoardText}</a>
             <a href="https://business-30.vercel.app/" target="_blank" rel="noopener noreferrer">Business 3.0</a>
-            <a href="#" onClick={handleMagicClick}>{magicText === 'Get invited' ? 'Magic Shows' : magicText}</a>
+            <a href="https://magic-show-pi.vercel.app" target="_blank" rel="noopener noreferrer">Magic Shows</a>
             <a href="#invest" onClick={(e) => { e.preventDefault(); investRef.current?.scrollIntoView({ behavior: 'smooth' }); }}>Investors</a>
           </div>
           <p className="footer-fine-print">
