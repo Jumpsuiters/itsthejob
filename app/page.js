@@ -661,50 +661,7 @@ export default function Home() {
               We&apos;re the new human resources that will create the new human economy.
               Expressing interest doesn&apos;t commit you to anything — it just starts the conversation.
             </p>
-            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="magic-btn" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none', marginBottom: '1.5rem' }}>Read the Pitch Deck</a>
-            {investStatus === 'success' ? (
-              <p className="magic-confirmed">You&apos;re in. We&apos;ll be in touch when the organism is ready for you.</p>
-            ) : (
-              <form className="invest-form" onSubmit={async (e) => {
-                e.preventDefault();
-                setInvestStatus('submitting');
-                const { error } = await supabase.from('deck_waitlist').insert([{
-                  name: investForm.name,
-                  email: investForm.email,
-                  phone: investForm.phone || null,
-                  investment_level: investForm.investment_level || null,
-                }]);
-                setInvestStatus(error ? 'error' : 'success');
-              }}>
-                <div className="invest-form-field">
-                  <label>Name *</label>
-                  <input type="text" required value={investForm.name} onChange={e => setInvestForm(f => ({ ...f, name: e.target.value }))} className="magic-input" placeholder="Your name" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Email *</label>
-                  <input type="email" required value={investForm.email} onChange={e => setInvestForm(f => ({ ...f, email: e.target.value }))} className="magic-input" placeholder="Your email" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Phone</label>
-                  <input type="tel" value={investForm.phone} onChange={e => setInvestForm(f => ({ ...f, phone: e.target.value }))} className="magic-input" placeholder="Your phone (optional)" />
-                </div>
-                <div className="invest-form-field">
-                  <label>Investment Interest</label>
-                  <select value={investForm.investment_level} onChange={e => setInvestForm(f => ({ ...f, investment_level: e.target.value }))} className="magic-input">
-                    <option value="">Select a range</option>
-                    <option value="$1K-$10K">$1K – $10K</option>
-                    <option value="$10K-$50K">$10K – $50K</option>
-                    <option value="$50K-$100K">$50K – $100K</option>
-                    <option value="$100K-$500K">$100K – $500K</option>
-                    <option value="$500K+">$500K+</option>
-                    <option value="Just watching">Just watching for now</option>
-                  </select>
-                </div>
-                <button type="submit" className="magic-btn" disabled={investStatus === 'submitting'}>
-                  {investStatus === 'submitting' ? 'Joining...' : investStatus === 'error' ? 'Try again' : 'Join the Organism'}
-                </button>
-              </form>
-            )}
+            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="magic-btn" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Read the Pitch Deck</a>
           </div>
 
           <div className="door door-redacted">
