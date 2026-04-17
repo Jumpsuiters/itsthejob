@@ -203,10 +203,8 @@ export default function Home() {
   const [applyText, setApplyText] = useState(APPLY_WORDS[0]);
   const [redactedWord, setRedactedWord] = useState('[REDACTED]');
   const [aiHover, setAiHover] = useState(false);
-  const [b3Text, setB3Text] = useState('Evolve your company');
   const [redactedLinkText, setRedactedLinkText] = useState('Stay close');
   const [jobBoardText, setJobBoardText] = useState('Browse listings');
-  const [ownText, setOwnText] = useState('Own a piece');
   const [searchValue, setSearchValue] = useState('');
   const [searchResponse, setSearchResponse] = useState('');
   const [searchLocked, setSearchLocked] = useState(false);
@@ -216,8 +214,6 @@ export default function Home() {
   const [closeRevealed, setCloseRevealed] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
-  const [investForm, setInvestForm] = useState({ name: '', email: '', phone: '', investment_level: '' });
-  const [investStatus, setInvestStatus] = useState('idle');
   const [mslHover, setMslHover] = useState(false);
   const [jobBoardHover, setJobBoardHover] = useState(false);
   const intervalRef = useRef(null);
@@ -404,13 +400,6 @@ export default function Home() {
     }, 2500);
   }
 
-  function handleB3Click(e) {
-    e.preventDefault();
-    setB3Text('We\u2019re still training the humans.');
-    setTimeout(() => setB3Text('Check back when they\u2019re ready.'), 2500);
-    setTimeout(() => setB3Text('Evolve your company'), 5000);
-  }
-
   function handleRedactedClick(e) {
     e.preventDefault();
     setRedactedLinkText('This door hasn\u2019t appeared yet.');
@@ -424,13 +413,6 @@ export default function Home() {
     setTimeout(() => {
       setJobBoardText('Browse listings');
     }, 2000);
-  }
-
-  function handleOwnClick(e) {
-    e.preventDefault();
-    setOwnText('Not yet. But you\u2019re early.');
-    setTimeout(() => setOwnText('We\u2019ll remember that.'), 2000);
-    setTimeout(() => setOwnText('Own a piece'), 4500);
   }
 
   function handleFindDoor(e) {
@@ -502,7 +484,7 @@ export default function Home() {
           }}
           style={{ cursor: !heroRevealed ? 'pointer' : 'default' }}
         >
-          Welcome to the &ldquo;new human&rdquo; resource.
+          Welcome to the Joy of Being.
         </p>
         {!heroRevealed && (
           <span className="question-hint">click.</span>
@@ -511,9 +493,9 @@ export default function Home() {
         {heroRevealed && (
           <div className="hero-reveal">
             <p className="hero-narrative">
-              Work never taught us how to be human. It fragmented us. So did religion.
+              The three institutions that told us who to be &mdash; work, church, and school &mdash; are all dissolving at the same time.
               <br /><br />
-              <span className="hero-gradient">Our J.O.B. is the integration.</span>
+              <span className="hero-gradient">We&apos;re building what comes next.</span>
             </p>
             <div className="hero-cta">
               <p className="rco-explain">
@@ -590,7 +572,7 @@ export default function Home() {
               AI runs ops. Humans do human work.
               The companies that survive the next decade won&apos;t look like companies at all.
             </p>
-            <a href="https://business-30.vercel.app/" target="_blank" rel="noopener noreferrer" className="door-link">Evolve your company</a>
+            <a href="https://business-30.vercel.app" target="_blank" rel="noopener noreferrer" className="door-link">Evolve your company</a>
           </div>
 
           <div className="door">
@@ -658,8 +640,8 @@ export default function Home() {
             <h2 className="door-title">Invest</h2>
             <p className="door-desc">
               This is an invitation to fund a species-level upgrade.
-              We&apos;re the new human resources that will create the new human economy.
-              Expressing interest doesn&apos;t commit you to anything — it just starts the conversation.
+              Being human is the job now. We&apos;re building the infrastructure to make it possible.
+              Expressing interest doesn&apos;t commit you to anything &mdash; it just starts the conversation.
             </p>
             <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="magic-btn" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Read the Pitch Deck</a>
           </div>
@@ -747,6 +729,20 @@ export default function Home() {
           ) : null}
           <div className={`hired-msg ${applied ? 'visible' : ''}`}>
             You&apos;re hired. You always were.
+            <p className="linkedin-prompt">Your new job title is waiting.</p>
+            <a
+              href="https://www.linkedin.com/profile/add?startTask=POSITION&title=Human%20in%20Residence&company=J.O.B.&organizationId=113424351"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-linkedin"
+            >
+              Add to LinkedIn
+            </a>
+            <p className="linkedin-disclaimer">
+              This is not a real job offer. At least not yet anyway.
+              By clicking the button you are simply telling LinkedIn what you actually do all day.
+              J.O.B. is not liable for any existential awakenings that may follow.
+            </p>
           </div>
         </div>
         </div>
@@ -812,13 +808,13 @@ export default function Home() {
       {/* ===== FOOTER ===== */}
       <footer className="footer">
         <div className="footer-inner">
-          <div className="footer-brand">J.O.B. &mdash; The New Human Resources</div>
+          <div className="footer-brand">J.O.B. &mdash; The Joy of Being</div>
           <div className="footer-links">
             <a href="https://apply.itsthejob.com" target="_blank" rel="noopener noreferrer">The Church</a>
             <a href="#" onClick={handleJobBoardClick}>{jobBoardText === 'Browse listings' ? 'The J.O.B. Board' : jobBoardText}</a>
             <a href="https://business-30.vercel.app/" target="_blank" rel="noopener noreferrer">Business 3.0</a>
             <a href="https://magic-show-pi.vercel.app" target="_blank" rel="noopener noreferrer">Magic Shows</a>
-            <a href="#invest" onClick={(e) => { e.preventDefault(); investRef.current?.scrollIntoView({ behavior: 'smooth' }); }}>Investors</a>
+            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer">Invest</a>
           </div>
           <p className="footer-fine-print">
             This page was not written by AI. We asked. It said this was too weird.

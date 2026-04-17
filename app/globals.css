@@ -338,6 +338,46 @@ a { color: inherit; }
   opacity: 1;
 }
 
+.linkedin-prompt {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--white-text);
+  letter-spacing: -0.01em;
+}
+
+.btn-linkedin {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.65rem 2rem;
+  background: linear-gradient(135deg, var(--glow-gold), var(--glow-chartreuse), var(--glow-teal), var(--glow-purple), var(--glow-pink));
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-linkedin:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.linkedin-disclaimer {
+  margin-top: 1.25rem;
+  font-size: 0.7rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--white-muted);
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  opacity: 0.6;
+}
+
 /* ============================================
    THE QUESTION — Still white, the hinge
    ============================================ */
