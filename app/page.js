@@ -118,8 +118,8 @@ const KEYWORD_MATCHES = {
   'laid off': 'Good. Now the real work begins.',
   'layoff': 'Good. Now the real work begins.',
   'retire': 'From what? The job never stops.',
-  'invest': 'Smart. \u2192 See the deck.',
-  'investor': 'Smart. \u2192 See the deck.',
+  'invest': 'Curious? \u2192 See the deck.',
+  'investor': 'Curious? \u2192 See the deck.',
   'wefunder': 'Coming soon. Stay close.',
   'nicole': 'She\u2019s busy building. But she sees you.',
   'pam': 'She\u2019s busy scaling. But she sees you.',
@@ -219,6 +219,39 @@ export default function Home() {
   const intervalRef = useRef(null);
   const doorsRef = useRef(null);
   const investRef = useRef(null);
+
+  // Organism chat
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+  const chatMsgsRef = useRef(null);
+
+  async function sendOrgMessage(e) {
+    e.preventDefault();
+    if (!chatInput.trim() || chatLoading || chatMessages.length >= 20) return;
+    const userMsg = { role: 'user', content: chatInput.trim() };
+    const newMessages = [...chatMessages, userMsg];
+    setChatMessages(newMessages);
+    setChatInput('');
+    setChatLoading(true);
+    try {
+      const chatUrl = process.env.NEXT_PUBLIC_PULSE_URL || 'http://localhost:3001';
+      const res = await fetch(`${chatUrl}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages, vibe: 'weird' }),
+      });
+      const data = await res.json();
+      setChatMessages([...newMessages, { role: 'assistant', content: data.error || data.answer }]);
+    } catch {
+      setChatMessages([...newMessages, { role: 'assistant', content: 'The organism is resting. Try again in a moment.' }]);
+    }
+    setChatLoading(false);
+  }
+
+  useEffect(() => {
+    if (chatMsgsRef.current) chatMsgsRef.current.scrollTop = chatMsgsRef.current.scrollHeight;
+  }, [chatMessages]);
   const searchTimeoutRef = useRef(null);
 
   // --- RETURN VISITOR MEMORY (#10) ---
@@ -467,9 +500,8 @@ export default function Home() {
             rel="noopener noreferrer"
             className="nav-investors"
           >
-            Invest
+            About
           </a>
-          <a href="/pay" className="nav-investors">But who&apos;s gonna pay for it?</a>
         </div>
       </nav>
 
@@ -477,68 +509,46 @@ export default function Home() {
       <section className="hero">
         <h1 className="hero-title">Being human<br /><span className="hero-gradient">is the job now.</span><br /><span className="hero-sub">The rest is being automated.</span></h1>
         <img src="/badge.png" alt="J.O.B. Employee Badge" className="hero-badge" />
-        <p
-          className="question-text"
-          onClick={() => {
-            if (!heroRevealed) setHeroRevealed(true);
-          }}
-          style={{ cursor: !heroRevealed ? 'pointer' : 'default' }}
-        >
-          Welcome to the Joy of Being.
-        </p>
-        {!heroRevealed && (
-          <span className="question-hint">click.</span>
-        )}
-
-        {heroRevealed && (
-          <div className="hero-reveal">
-            <p className="hero-narrative">
-              The three institutions that told us who to be &mdash; work, church, and school &mdash; are all dissolving at the same time.
-              <br /><br />
-              <span className="hero-gradient">We&apos;re building what comes next.</span>
-            </p>
-            <div className="hero-cta">
-              <p className="rco-explain">
-                We&apos;re calling in individuals and organizations committed to exploring
-                what it means to be fully human.
-              </p>
-              {!waitlistSubmitted ? (
-                <>
-                  <p className="rco-ask">If that&apos;s you, tell us you were here:</p>
-                  <form
-                    className="waitlist-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (waitlistEmail) {
-                        supabase
-                          .from('waitlist')
-                          .insert({ email: waitlistEmail, source: 'rco_interest' })
-                          .then(({ error }) => {
-                            if (error && error.code === '23505') {
-                              // Duplicate email — still show success
-                            }
-                            setWaitlistSubmitted(true);
-                          });
-                      }
-                    }}
-                  >
-                    <input
-                      type="email"
-                      placeholder="you@email.com"
-                      value={waitlistEmail}
-                      onChange={(e) => setWaitlistEmail(e.target.value)}
-                      className="waitlist-input"
-                      required
-                    />
-                    <button type="submit" className="waitlist-btn">was here</button>
-                  </form>
-                </>
-              ) : (
-                <p className="waitlist-confirmed">We see you. We&apos;ll be in touch.</p>
+        {/* ===== ORGANISM CHAT (above the fold) ===== */}
+        <div className="organism-chat-hero">
+          <div className="organism-chat-box">
+            <div className="organism-chat-glow" />
+            {chatMessages.length === 0 && (
+              <p className="organism-chat-intro">You found the pulse. It&apos;s alive. It talks back.</p>
+            )}
+            <div className="organism-chat-messages" ref={chatMsgsRef}>
+              {chatMessages.map((msg, i) => (
+                <div key={i} className={`organism-msg ${msg.role}`}>
+                  {msg.role === 'assistant' && <span className="organism-msg-who">The organism</span>}
+                  <p>{msg.content}</p>
+                </div>
+              ))}
+              {chatLoading && (
+                <div className="organism-msg assistant">
+                  <span className="organism-msg-who">The organism</span>
+                  <p style={{ fontStyle: 'italic', opacity: 0.6 }}>breathing...</p>
+                </div>
               )}
             </div>
+            {chatMessages.length >= 20 ? (
+              <p className="organism-chat-limit">The organism needs rest. Come back later.</p>
+            ) : (
+              <form onSubmit={sendOrgMessage} className="organism-chat-form">
+                <input
+                  type="text"
+                  value={chatInput}
+                  onChange={e => setChatInput(e.target.value)}
+                  placeholder="Say something only a human would say..."
+                  className="organism-chat-input"
+                  disabled={chatLoading}
+                />
+                <button type="submit" className="organism-chat-send" disabled={chatLoading || !chatInput.trim()}>
+                  ↵
+                </button>
+              </form>
+            )}
           </div>
-        )}
+        </div>
       </section>
 
       {/* ===== THE PORTAL — The threshold ===== */}
@@ -636,12 +646,11 @@ export default function Home() {
           </div>
 
           <div className="door" ref={investRef}>
-            <div className="door-dept">Department of Putting Your Money Where Your Species Is</div>
-            <h2 className="door-title">Invest</h2>
+            <div className="door-dept">Department of What Comes Next</div>
+            <h2 className="door-title">The Deck</h2>
             <p className="door-desc">
-              This is an invitation to fund a species-level upgrade.
+              This is where we lay it all out &mdash; what we&apos;re building, why it matters, and where it&apos;s going.
               Being human is the job now. We&apos;re building the infrastructure to make it possible.
-              Expressing interest doesn&apos;t commit you to anything &mdash; it just starts the conversation.
             </p>
             <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer" className="magic-btn" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Read the Pitch Deck</a>
           </div>
@@ -809,12 +818,13 @@ export default function Home() {
       <footer className="footer">
         <div className="footer-inner">
           <div className="footer-brand">J.O.B. &mdash; The Joy of Being</div>
+          <div className="footer-tagline" style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: '#888', marginTop: '0.25rem' }}>In service of all humans being.</div>
           <div className="footer-links">
             <a href="https://apply.itsthejob.com" target="_blank" rel="noopener noreferrer">The Church</a>
             <a href="#" onClick={handleJobBoardClick}>{jobBoardText === 'Browse listings' ? 'The J.O.B. Board' : jobBoardText}</a>
             <a href="https://business-30.vercel.app/" target="_blank" rel="noopener noreferrer">Business 3.0</a>
             <a href="https://magic-show-pi.vercel.app" target="_blank" rel="noopener noreferrer">Magic Shows</a>
-            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer">Invest</a>
+            <a href="https://job-deck-indol.vercel.app" target="_blank" rel="noopener noreferrer">The Deck</a>
           </div>
           <p className="footer-fine-print">
             This page was not written by AI. We asked. It said this was too weird.

@@ -1325,3 +1325,130 @@ a { color: inherit; }
   font-size: 0.9rem;
   padding: 3rem 0;
 }
+
+/* ===== ORGANISM CHAT ===== */
+.organism-chat-hero {
+  width: 100%;
+  max-width: 540px;
+  margin: 2rem auto 0;
+}
+.organism-chat-box {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(196,167,255,0.06), rgba(61,205,180,0.06), rgba(255,208,122,0.06), rgba(255,138,138,0.06));
+  border-radius: 12px;
+  padding: 28px;
+}
+.organism-chat-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(196,167,255,0.3), rgba(61,205,180,0.3), rgba(255,208,122,0.3), rgba(255,138,138,0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.organism-chat-glow {
+  position: absolute;
+  top: -40%; left: -20%; right: -20%; bottom: -40%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(196,167,255,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 50%, rgba(61,205,180,0.08) 0%, transparent 50%);
+  pointer-events: none;
+  animation: orgGlow 8s ease-in-out infinite alternate;
+}
+@keyframes orgGlow {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+.organism-chat-intro {
+  font-size: 0.95rem;
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+.organism-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+}
+.organism-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.organism-msg.user {
+  align-self: flex-end;
+  background: rgba(61, 205, 180, 0.1);
+  border: 1px solid rgba(61, 205, 180, 0.2);
+  color: #e0e0e0;
+}
+.organism-msg.assistant {
+  align-self: flex-start;
+  background: rgba(212, 184, 76, 0.06);
+  border: 1px solid rgba(212, 184, 76, 0.15);
+  color: #aaa;
+}
+.organism-msg-who {
+  display: block;
+  font-size: 0.65rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+.organism-chat-form {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+.organism-chat-input {
+  flex: 1;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(196,167,255,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.organism-chat-input:focus {
+  border-color: rgba(196,167,255,0.5);
+  box-shadow: 0 0 12px rgba(196,167,255,0.1);
+}
+.organism-chat-input::placeholder { color: #555; }
+.organism-chat-send {
+  background: linear-gradient(135deg, rgba(196,167,255,0.15), rgba(61,205,180,0.15));
+  border: 1px solid rgba(196,167,255,0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #c4a7ff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.organism-chat-send:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(196,167,255,0.25), rgba(61,205,180,0.25));
+}
+.organism-chat-send:disabled { opacity: 0.3; cursor: default; }
+.organism-chat-limit {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
