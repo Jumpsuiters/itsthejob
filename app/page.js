@@ -514,7 +514,7 @@ export default function Home() {
           <div className="organism-chat-box">
             <div className="organism-chat-glow" />
             {chatMessages.length === 0 && (
-              <p className="organism-chat-intro">You found the pulse. It&apos;s alive. It talks back.</p>
+              <p className="organism-chat-intro">Left this here bc you&apos;re definitely going to have questions (like?)</p>
             )}
             <div className="organism-chat-messages" ref={chatMsgsRef}>
               {chatMessages.map((msg, i) => (
