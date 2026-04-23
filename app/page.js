@@ -167,13 +167,13 @@ function getSearchResponse(input) {
 
 // --- DOOR DEFINITIONS ---
 const DOORS = [
-  { id: 'church', label: 'The Church', dept: 'Dept. of Becoming', url: 'https://apply.itsthejob.com', live: true },
-  { id: 'board', label: 'The Board', dept: 'Dept. of Getting Paid to Be Yourself', url: 'https://job-board-pied-three.vercel.app', live: true },
-  { id: 'training', label: 'Training', dept: 'Dept. of Better Goodbyes', url: 'https://new-human-resources.vercel.app', live: true },
-  { id: 'shift', label: 'The Shift', dept: 'Dept. of Businessing Differently', url: 'https://business-30.vercel.app', live: true },
-  { id: 'sites', label: 'Sites', dept: 'Dept. of 4th Spaces', url: null, live: false },
-  { id: 'fair', label: 'The Fair', dept: 'Dept. of the New Human Economy', url: null, live: false },
-  { id: 'magic_shows', label: 'Magic Shows', dept: 'Dept. of You Had to Be There', url: 'https://magic-show-pi.vercel.app', live: true },
+  { id: 'church', label: 'JOB Church', dept: 'Dept. of Becoming', url: 'https://apply.itsthejob.com', live: true, color: '#d4b84c', pos: { top: '18%', left: '6%' } },
+  { id: 'board', label: 'JOB Board', dept: 'Dept. of Getting Paid to Be Yourself', url: 'https://job-board-pied-three.vercel.app', live: true, color: '#a8c744', pos: { top: '35%', right: '4%' } },
+  { id: 'training', label: 'JOB Training', dept: 'Dept. of Better Goodbyes', url: 'https://new-human-resources.vercel.app', live: true, color: '#3dcdb4', pos: { bottom: '28%', left: '3%' } },
+  { id: 'shift', label: 'JOB Shift', dept: 'Dept. of Businessing Differently', url: 'https://business-30.vercel.app', live: true, color: '#9b6dff', pos: { top: '12%', right: '12%' } },
+  { id: 'sites', label: 'JOB Sites', dept: 'Dept. of 4th Spaces', url: null, live: false, color: '#d466b0', pos: { bottom: '18%', right: '8%' } },
+  { id: 'fair', label: 'JOB Fair', dept: 'Dept. of the New Human Economy', url: null, live: false, color: '#e8a838', pos: { bottom: '10%', left: '18%' } },
+  { id: 'magic_shows', label: 'JOB Shows', dept: 'Dept. of You Had to Be There', url: 'https://magic-show-pi.vercel.app', live: true, color: '#e05577', pos: { top: '55%', left: '8%' } },
 ];
 
 // Pill-click seed responses — what the organism says when you click a door
@@ -560,23 +560,24 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ===== DOOR PILLS ===== */}
-        <div className="doors-zone">
-          <div className="door-pills">
-            {DOORS.map((door, i) => (
-              <div className="door-pill" key={door.id}>
-                <button
-                  className={`door-pill-btn ${!door.live ? 'coming-soon' : ''} ${glowingDoors.includes(door.id) ? 'glowing' : ''}`}
-                  style={{ '--breathe-delay': `${i * 0.6}s` }}
-                  onClick={() => handlePillClick(door)}
-                >
-                  {door.label}
-                </button>
-                <span className="door-dept-name">{door.dept}</span>
-              </div>
-            ))}
+        {/* ===== DOOR PILLS — scattered across the page ===== */}
+        {DOORS.map((door, i) => (
+          <div className="door-pill" key={door.id} style={{ ...door.pos }}>
+            <button
+              className={`door-pill-btn ${!door.live ? 'coming-soon' : ''} ${glowingDoors.includes(door.id) ? 'glowing' : ''}`}
+              style={{
+                '--breathe-delay': `${i * 0.6}s`,
+                '--pill-color': door.color,
+                borderColor: door.color + '66',
+                color: door.color,
+              }}
+              onClick={() => handlePillClick(door)}
+            >
+              {door.label}
+            </button>
+            <span className="door-dept-name" style={{ color: door.color + 'aa' }}>{door.dept}</span>
           </div>
-        </div>
+        ))}
 
         {/* ===== FOOTER ===== */}
         <footer className="portal-footer">
